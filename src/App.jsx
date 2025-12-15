@@ -1,8 +1,8 @@
-import React from 'react'
+import { useState, useRef, useEffect } from "react";
 import Clean1 from '../public/images/clean1.jpg'
 import Clean2 from '../public/images/clean2.jpg'
 import Clean3 from '../public/images/clean3.jpg'
-import { useState } from 'react'
+import Clean4 from '../public/images/clean5.png'
 import { FaWhatsapp } from "react-icons/fa";
 import { CgMail } from "react-icons/cg";
 
@@ -13,6 +13,21 @@ export default function App() {
   const waLink = `https://wa.me/${WHATSAPP_NUMBER.replace(/[^+0-9]/g, '')}`
   const mailLink = `mailto:${EMAIL}`
   const [isOpen, setIsOpen] = useState(false)
+  const [openIndex, setOpenIndex] = useState(null);
+  const cardRef = useRef(null);
+
+
+  useEffect(() => {
+    const handleClickOutside = (e) => {
+      if (cardRef.current && !cardRef.current.contains(e.target)) {
+        setOpenIndex(null);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
+
 
   return (
     <div className="min-h-screen bg-base-200">
@@ -106,23 +121,84 @@ export default function App() {
       {/* Main content */}
       <main className="container mx-auto py-16 px-4">
         {/* Services */}
+
+
         <section id="services" className="mb-12">
           <h2 className="text-3xl font-bold mb-6 text-center">Our Services</h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
-            {[{ img: Clean1, title: '1000W-2000W SOLAR GENERATOR', desc: 'Rated power output:1800waths, battery capacity:2048wh(LiFePO battery/lithuim iron phosphate), build-in inverter pure shine wave(1kw), AC output: 220v/50Hz. it also come with charger' },
-            { img: Clean2, title: '3000W-5000W SOLAR GENERATOR', desc: 'Rated power output:1800waths, battery capacity:2048wh(LiFePO battery/lithuim battery), build-in inverter pure shine wave, AC output: 220v/50Hz. it also come with charger' },
-            { img: Clean3, title: 'SOLAR PANEL', desc: 'The is panel for solar energy receptor which charge your inverter whenever there is power outage to keep your inverter standby.' },].map((service, index) => (
-              <div key={index} className="card bg-white shadow hover:shadow-lg flex flex-col">
+            {[{
+              img: Clean1,
+              title: '1000W-2000W SOLAR GENERATOR',
+              desc: 'Rated Power Output:1000watts -1800 Watts, Battery Capacity: 2048Wh (LiFePO₄ Battery/Lithuim Battery), Built-in Inverter: Pure Sine Wave (1.8kW continuous / 2.5kW peak), AC Output: 220V / 50Hz, DC Output Ports: 12V, USB-A, Type-C, Car Port',
+              spec: 'Solar Input: Supports up to 500W solar panel, Recharge Options: Solar / AC wall / car charging, Charging Time: 5–6 hours (solar), Display: Digital screen for load and battery level, Weight: Approx. 20–25kg'
+            },
+            {
+              img: Clean2, title: '3000W-5000W SOLAR GENERATOR',
+              desc: 'Rated Power Output: 3000 Watts /5000 watts(3 kW/5kw), Battery Capacity: 5120 Wh (Lithium Iron Phosphate – LiFePO₄), Built-in Inverter: Pure Sine Wave (3 kW, 24V/48V system), AC Output: 220V / 50Hz, ',
+              spec: 'DC Output Ports: 12V, USB-A, Type-C, and 16V DC outlets, Solar Input: Supports up to 600W solar panels, Recharge Options: Solar, wall socket (AC), or backup generator, Charging Time: 5–6 hours (solar), 4 hours (AC), Weight: Approx. 20–25kg'
+            },
+            {
+              img: Clean3,
+              title: 'SOLAR PANEL 300 Watts/750 watts',
+              desc: 'Cell Type: Monocrystalline / Polycrystalline (depending on the manufacturer), Voltage at Maximum Power (Vmp): 36V – 40V/(Vmp): 40V – 44V, Current at Maximum Power (Imp): 8.3A – 8.5A/18.5A – 19A, Open Circuit Voltage (Voc): 44V – 46V/46V – 48V, Short Circuit Current (Isc): 9.2A – 9.5A/20A – 20.5A',
+              spec: 'Module Efficiency: 17% – 19% (varies based on technology)/17% – 19%, Operating Temperature: -40°C to 85°C/-40°C to 85°C, Dimensions: Approx. 1640mm x 992mm x 40mm (varies slightly with manufacturer), Weight: Approx. 18-20 kg, Warranty: 10 years for product, 25 years for performance (often with 80% output at 25 years), Maximum System Voltage: 1000V or 1500V (depending on certification), Frame: Aluminum (corrosion-resistant)'
+            },
+            {
+              img: Clean4,
+              title: 'SOLAR PANEL 300 Watts/750 watts',
+              desc: 'Cell Type: Monocrystalline / Polycrystalline (depending on the manufacturer), Voltage at Maximum Power (Vmp): 36V – 40V/(Vmp): 40V – 44V, Current at Maximum Power (Imp): 8.3A – 8.5A/18.5A – 19A, Open Circuit Voltage (Voc): 44V – 46V/46V – 48V, Short Circuit Current (Isc): 9.2A – 9.5A/20A – 20.5A',
+              spec: 'Module Efficiency: 17% – 19% (varies based on technology)/17% – 19%, Operating Temperature: -40°C to 85°C/-40°C to 85°C, Dimensions: Approx. 1640mm x 992mm x 40mm (varies slightly with manufacturer), Weight: Approx. 18-20 kg, Warranty: 10 years for product, 25 years for performance (often with 80% output at 25 years), Maximum System Voltage: 1000V or 1500V (depending on certification), Frame: Aluminum (corrosion-resistant)'
+            },
+            ].map((service, index) => (
+              <div
+                key={index}
+                ref={cardRef}
+                onClick={() =>
+                  setOpenIndex(openIndex === index ? null : index)
+                }
+                className="card bg-white shadow hover:shadow-lg flex flex-col cursor-pointer transition-all duration-300"
+              >
                 <figure className="px-6 pt-6">
-                  <img src={service.img} alt={service.title} className="rounded-xl w-full h-48 object-cover" />
+                  <img
+                    src={service.img}
+                    alt={service.title}
+                    className="rounded-xl w-full h-48 object-cover"
+                  />
                 </figure>
-                <div className="card-body flex flex-col justify-between">
-                  <h3 className="card-title">{service.title}</h3>
-                  <p>{service.desc}</p>
+
+                <div className="card-body">
+                  <h3 className="card-title text-lg font-semibold">
+                    {service.title}
+                  </h3>
+
+                  {/* Short preview */}
+                  <p className="text-sm text-gray-600">
+                    {service.desc.slice(0, 120)}...
+                  </p>
+
+                  {/* Accordion content */}
+                  <div
+                    className={`overflow-hidden transition-all duration-300 ${openIndex === index ? "max-h-96 mt-3" : "max-h-0"
+                      }`}
+                  >
+                    <p className="text-sm text-gray-700 mt-2">
+                      {service.desc}
+                    </p>
+                    <p className="text-sm text-gray-700 mt-2">
+                      {service.spec}
+                    </p>
+                  </div>
                 </div>
+
                 <div className="flex mb-4 items-center justify-center">
-                  <a href={waLink} target="_blank" rel="noreferrer" className="btn btn-circle btn-success">
-                    <FaWhatsapp />
+                  <a
+                    href={waLink}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="btn btn-success btn-sm flex items-center gap-2"
+                    onClick={(e) => e.stopPropagation()} // prevent accordion toggle
+                  >
+                    For more inquiries <FaWhatsapp />
                   </a>
                 </div>
               </div>
@@ -170,13 +246,13 @@ export default function App() {
         <section id="about" className="mb-12">
           <h2 className="text-3xl font-bold mb-4 text-center">Who We Are?</h2>
           <p className="list-disc text-justify pl-6 space-y-2 max-w-xl mx-auto text-center sm:text-left">
-           
-              We are a team of renewable energy enthusiasts committed to revolutionizing
-              the way you think about power. Our portable solar generators are built for versatility,
-              convenience, and performance. We understand that every customer has unique needs,
-              which is why we offer flexible, custom solutions that fit your energy requirements
-              whether it’s for your home, business, or outdoor activities.
-            
+
+            We are a team of renewable energy enthusiasts committed to revolutionizing
+            the way you think about power. Our portable solar generators are built for versatility,
+            convenience, and performance. We understand that every customer has unique needs,
+            which is why we offer flexible, custom solutions that fit your energy requirements
+            whether it’s for your home, business, or outdoor activities.
+
           </p>
         </section>
         <section id="about" className="mb-12">

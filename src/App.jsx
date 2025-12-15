@@ -109,8 +109,8 @@ export default function App() {
         <section id="services" className="mb-12">
           <h2 className="text-3xl font-bold mb-6 text-center">Our Services</h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
-            {[{ img: Clean1, title: '1000W SOLAR GENERATOR', desc: 'Rated power output:1800waths, battery capacity:2048wh(LiFePO battery/lithuim iron phosphate), build-in inverter pure shine wave(1kw), AC output: 220v/50Hz. it also come with charger' },
-            { img: Clean2, title: 'SOLAR HYBRID INVERTER', desc: 'Rated power output:1800waths, battery capacity:2048wh(LiFePO battery/lithuim battery), build-in inverter pure shine wave, AC output: 220v/50Hz. it also come with charger' },
+            {[{ img: Clean1, title: '1000W-2000W SOLAR GENERATOR', desc: 'Rated power output:1800waths, battery capacity:2048wh(LiFePO battery/lithuim iron phosphate), build-in inverter pure shine wave(1kw), AC output: 220v/50Hz. it also come with charger' },
+            { img: Clean2, title: '3000W-5000W SOLAR GENERATOR', desc: 'Rated power output:1800waths, battery capacity:2048wh(LiFePO battery/lithuim battery), build-in inverter pure shine wave, AC output: 220v/50Hz. it also come with charger' },
             { img: Clean3, title: 'SOLAR PANEL', desc: 'The is panel for solar energy receptor which charge your inverter whenever there is power outage to keep your inverter standby.' },].map((service, index) => (
               <div key={index} className="card bg-white shadow hover:shadow-lg flex flex-col">
                 <figure className="px-6 pt-6">
